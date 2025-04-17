@@ -1,0 +1,12 @@
+footer {
+    color: #ffc107;
+    margin-bottom: 10px; 
+    align-items: center;
+    max-width: 100%;
+
+}
+
+ footer > p {
+    color: #fff;
+    margin-bottom: 5px; 
+}

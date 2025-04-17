@@ -1,0 +1,164 @@
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+
+}
+
+
+
+body{
+    color: white;
+    background-color: #202634;
+    height: 100vh;
+}
+
+main{
+    margin: 20px;
+    text-align: center;
+}
+
+a[href="#"]{
+  color: red;
+}
+
+
+
+.tabela{
+  border: 1px solid rgb(153, 153, 153);
+  border-collapse: collapse;
+  color: rgb(189, 189, 189);
+  font-size: smaller;
+}
+.tabela td{
+  padding: 12px;
+  border-bottom: 1px solid white;
+}
+
+
+.barra-lateral > main{
+  width: 65vw;
+}
+
+.modal-cadastro{
+  background-color: #202634;
+}
+
+
+.enviar {
+    margin: 12px;
+    height: 50px;
+    width: 120px;
+    border-radius: 10px;
+    background: #333;
+    justify-content: center;
+    align-items: center;
+    box-shadow: -5px -5px 15px #444, 5px 5px 15px #222, inset 5px 5px 10px #444,
+      inset -5px -5px 10px #222;
+    font-family: "Damion", cursive;
+    cursor: pointer;
+    border: none;
+    font-size: 16px;
+    color: rgb(161, 161, 161);
+    transition: 500ms;
+  }
+  
+  .enviar:hover {
+    box-shadow: -5px -5px 15px #444, 5px 5px 15px #222, inset 5px 5px 10px #222,
+      inset -5px -5px 10px #444;
+    color: #d6d6d6;
+    transition: 500ms;
+  }
+  
+
+  .cadastro {
+    background-color: #202634; /* Cor de fundo do card */
+    border: 1px solid #343A4B; /* Borda */
+    border-radius: 8px; /* Bordas arredondadas */
+    padding: 20px;
+    width: 300px;
+    color: #fff; /* Cor do texto */
+    font-family: Arial, sans-serif;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra */
+    margin: auto;
+}
+
+.cadastro label {
+    display: block;
+    margin-bottom: 5px;
+    font-size: 14px;
+    color: #E0E0E0; /* Cor do texto do label */
+}
+
+.cadastro input[type="text"],
+.cadastro select {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #343A4B;
+    border-radius: 5px;
+    background-color: #343A4B;
+    color: #fff;
+    font-size: 14px;
+}
+
+.cadastro input[type="text"]:focus,
+.cadastro select:focus {
+    outline: none;
+    border-color: #4A90E2; /* Cor de foco */
+    box-shadow: 0 0 5px rgba(74, 144, 226, 0.5);
+}
+
+.cadastro select {
+    cursor: pointer;
+}
+
+.cadastro input[type="date"] {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #343A4B;
+  border-radius: 5px;
+  background-color: #343A4B;
+  color: #fff;
+  font-size: 14px;
+}
+
+.cadastro input[type="date"]::-webkit-calendar-picker-indicator {
+  filter: invert(1); /* Inverte as cores do ícone para combinar com o tema escuro */
+  cursor: pointer;
+}
+
+.cadastro input[type="date"]:focus {
+  outline: none;
+  border-color: #4A90E2; /* Cor de foco */
+  box-shadow: 0 0 5px rgba(74, 144, 226, 0.5);
+}
+
+
+.enviar {
+  background-color: #343A4B; /* Cor de fundo */
+  color: #fff; /* Cor do texto */
+  border: 1px solid #202634; /* Borda */
+  border-radius: 5px; /* Bordas arredondadas */
+  padding: 10px 20px;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.enviar:hover {
+  background-color: #4A90E2; /* Cor ao passar o mouse */
+  box-shadow: 0 4px 8px rgba(74, 144, 226, 0.5); /* Sombra ao passar o mouse */
+}
+
+.enviar:focus {
+  outline: none;
+  border-color: #4A90E2; /* Borda em foco */
+  box-shadow: 0 0 5px rgba(74, 144, 226, 0.5); /* Sombra em foco */
+}
+
+footer{
+  color: lightgray;
+}

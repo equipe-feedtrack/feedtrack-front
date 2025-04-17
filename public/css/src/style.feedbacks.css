@@ -1,0 +1,36 @@
+
+body {
+    background-color: #202634;
+    height: 100vh; /* Cor de fundo da página */
+}
+.title-text {
+    text-align: center; 
+    font-family: 'Arial', sans-serif; 
+    
+}
+
+a[href="#"]{
+    color: red;
+  }
+
+/* Adicionando uma classe para centralizar o botão */
+.text-center {
+    text-align: center; /* Centraliza o botão horizontalmente */
+    margin-top: 20px; /* Dê um espaço acima do botão */
+}
+
+.card-body {
+    padding: 1rem;
+    background-color: #1a1a1a;
+    color: aliceblue;
+}
+
+.card-title {
+    font-size: 1.25rem;
+    font-weight: bold;
+    color: white
+}
+
+footer{
+    color: lightgray;
+  }

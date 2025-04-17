@@ -1,0 +1,42 @@
+/* Estilo geral da página */
+body {
+    background-color: #202634; /* Cor de fundo da página */
+    
+}
+
+a[href="#"]{
+    color: red;
+  }
+
+.card-body {
+    text-align: center; /* Centraliza o texto dentro do card */
+    background-color: #1a1a1a;
+    border: 1px solid #ffc107;
+}
+
+.card-title {
+    font-size: 1.25rem; /* Ajusta o tamanho do título */
+    font-weight: bold;
+    color: white
+}
+
+.card p {
+    font-size: 1rem; /* Tamanho da fonte para as informações */
+    background-color: #fdfcff;
+}
+
+/* Estilo das imagens */
+.card-img-top {
+ margin: auto;
+}
+
+
+.title-text {
+    text-align: center; 
+    font-family: 'Arial', sans-serif; 
+    
+}
+
+footer{
+    color: lightgray;
+  }
