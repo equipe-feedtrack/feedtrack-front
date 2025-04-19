@@ -1,97 +1,68 @@
 
-# FeedTrack - Migração para React
+- **Tipos de commit:**
+- `feat`: Para novas funcionalidades.
+- `fix`: Para correções de bugs.
+- `docs`: Para mudanças na documentação.
+- `chore`: Para tarefas gerais e atualizações.
 
-Este projeto é a migração da versão HTML/CSS do FeedTrack para uma aplicação React. O foco é estruturar a aplicação com boas práticas e dividir as responsabilidades de forma colaborativa.
+### Exemplos de Commits:
+- `feat(navbar): Adicionar dropdown para usuário`
+- `fix(button): Corrigir alinhamento do botão principal`
 
----
+## Padrões de Branches
 
-## 🚀 Etapas do Projeto
+- **Branch principal**: `main`
+- **Branch de desenvolvimento**: `develop`
+- **Prefixos de branches:**
+- `feature/`: Para novas funcionalidades.
+- `bugfix/`: Para correções de bugs.
+- `release/`: Para preparar novas versões.
+- `hotfix/`: Para correções urgentes de produção.
 
-1. Inicializar projeto com React (Vite)
-2. Organizar estrutura de pastas e componentes
-3. Migrar páginas existentes para React
-4. Implementar React Router para navegação
-5. Reutilizar e adaptar os estilos CSS
-6. Revisar e refatorar onde necessário
+### Exemplos de nomes de branches:
+- `feature/html-to-jsx`
+- `bugfix/corrigir-erro-login`
+- `release/1.0.0`
 
----
+## Fluxo de Trabalho para Enzo
 
-## 👨‍💻 Equipe
+1. **Criação da branch de funcionalidade (feature):**
+ - Enzo cria a branch `feature/html-to-jsx` a partir da `develop`:
+   ```bash
+   git checkout develop
+   git pull origin develop
+   git checkout -b feature/html-to-jsx
+   ```
 
-- **Cleilson** - Setup inicial, estrutura do projeto, roteamento, layout base
-- **Enzo** - Migração das páginas e criação de componentes
+2. **Fazendo commits:**
+ - Enzo faz commits conforme for desenvolvendo a funcionalidade.
 
----
+3. **Atualizando a branch `feature/html-to-jsx` com as mudanças da `develop`:**
+ - Antes de finalizar, Enzo deve garantir que sua branch está atualizada com a última versão da `develop`:
+   ```bash
+   git checkout develop
+   git pull origin develop
+   git checkout feature/html-to-jsx
+   git merge develop
+   ```
 
-## 📂 Estrutura Inicial de Pastas
+4. **Enviando a branch para o repositório remoto:**
+ - Enzo envia suas alterações para o repositório remoto:
+   ```bash
+   git push origin feature/html-to-jsx
+   ```
 
-```bash
-src/
-├── assets/
-├── components/
-├── pages/
-├── App.jsx
-├── main.jsx
-└── index.css
-```
+5. **Criando um Pull Request (PR):**
+ - Enzo cria um PR para a branch `feature/html-to-jsx` para ser integrado à `develop`.
 
----
+6. **Atualizando a branch `develop`:**
+ - Após o merge do PR, todos devem manter a branch `develop` atualizada:
+   ```bash
+   git checkout develop
+   git pull origin develop
+   ```
 
-## 🧩 Divisão de Tarefas
+## Contribuindo
 
-### 🔧 Cleilson
-
-- [x] Criar projeto com Vite (`npm create vite@latest`)
-- [x] Configurar React Router
-- [x] Estruturar pastas (`components`, `pages`, `assets`)
-- [x] Criar componentes base: `Header`, `Footer`, `Layout`
-- [x] Criar sistema de rotas no `App.jsx`
-- [x] Comitar base no GitHub
-
-### 🎨 Enzo
-
-Responsável por migrar as 8 páginas existentes para React:
-
-| Página         | Arquivo React     | Componentes Reutilizáveis         |
-|----------------|-------------------|-----------------------------------|
-| Home           | `Home.jsx`        | Banner, Destaques                 |
-| Sobre          | `Sobre.jsx`       | Seções de texto, Missão/Visão     |
-| Serviços       | `Servicos.jsx`    | Lista de serviços                 |
-| Contato        | `Contato.jsx`     | Formulário, Mapa                  |
-| Login          | `Login.jsx`       | Formulário de login               |
-| Cadastro       | `Cadastro.jsx`    | Formulário de cadastro            |
-| Equipe         | `Equipe.jsx`      | Cards de integrantes              |
-| FAQ            | `Faq.jsx`         | Acordeões com perguntas/respostas |
-
----
-
-## 🔄 Workflow no GitHub
-
-- Cada tarefa deve ser feita em uma branch com nome claro: `feature/home-page`
-- Após terminar, abrir um Pull Request para `main`
-- O outro membro revisa antes de aprovar o merge
-
----
-
-## 📋 Quadro de Tarefas (GitHub Projects)
-
-**To Do**
-- Migrar página Home
-- Migrar página Sobre
-- Migrar página Serviços
-- ...
-
-**In Progress**
-- Página Contato
-
-**Done**
-- Setup inicial (por Cleilson)
-- Estrutura de rotas
-
----
-
-## 📆 Prazo
-
-- Setup inicial: até **[definir data]**
-- Migração de páginas: até **[definir data]**
-- Entrega final: até **[definir data]**
+- Siga os padrões de commit e as convenções de branch estabelecidas neste repositório para garantir uma colaboração eficiente.
+- Caso tenha dúvidas sobre o fluxo de trabalho ou sobre as branches, consulte os colegas ou abra uma issue para discussão.
