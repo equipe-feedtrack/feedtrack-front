@@ -1,4 +1,5 @@
 
+import Footer from './components/Footer'
 import Router from './Routers'
 
 function App() {
@@ -6,6 +7,7 @@ function App() {
   return (
     <div>
       <Router/>
+      <Footer/>
     </div>
   )
 }
