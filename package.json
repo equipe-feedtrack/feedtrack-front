@@ -5,12 +5,11 @@
   "type": "module",
   "homepage": "https://github.com/equipe-feedtrack/feedtrack-front",
   "scripts": {
-    "start": "node server.js",
     "dev": "vite --host",
     "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "deploy": "gh-pages -d build"
+    "deploy": "gh-pages -d dist"
   },
   "dependencies": {
     "@fortawesome/free-solid-svg-icons": "^6.7.2",
