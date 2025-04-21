@@ -18,7 +18,9 @@ main{
     text-align: center;
 }
 
-
+a[href="#"]{
+  color: red;
+}
 
 
 
