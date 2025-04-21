@@ -1,17 +1,25 @@
-import './css/navbar.css';
+/**
+ * NavBar component renders the navigation bar for the Feedtrack application.
+ * 
+ * The navigation bar includes:
+ * - Brand logo/name
+ * - Responsive toggle button for mobile view
+ * - Navigation links to different pages (Dashboard, Feedbacks, Clients, Products, Employees, About)
+ * - User dropdown menu with options for History, Settings, Profile, and Logout
+ * 
+ * @returns {React.JSX.Element} A navigation bar component with Bootstrap styling
+ */
+import React from "react";
 
 function NavBar() {
   return (
-    <nav
-      className="navbar navbar-expand-lg text-white"
-      style={{ backgroundColor: "#2B3035" }}
-    >
+    <nav className="navbar navbar-expand-lg text-white" style={{ backgroundColor: "#2B3035" }}>
       <div className="container-fluid ">
-        <a className="navbar-brand text-white" href="/dashboard">
+        <a className="navbar-brand text-white" href="index.html">
           Feedtrack
         </a>
         <button
-          className="navbar-toggler"
+          className="navbar-toggler" 
           style={{ backgroundColor: "#61677A" }}
           type="button"
           data-bs-toggle="collapse"
@@ -24,29 +32,23 @@ function NavBar() {
         </button>
         <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
           <div className="navbar-nav m-auto">
-            <a
-              className="nav-link text-white opacity-50"
-              href="/registro-feedback"
-            >
+            <a className="nav-link text-white opacity-50 " aria-current="page" href="/dashboard">
+              Dashboard
+            </a>
+            <a className="nav-link text-white opacity-50" href="/registro-feedback">
               Feedbacks
             </a>
-            <a
-              className="nav-link text-white opacity-50"
-              href="/cadastro-cliente"
-            >
+            <a className="nav-link text-white opacity-50" href="/cadastro-cliente">
               Clientes
             </a>
-            <a
-              className="nav-link text-white opacity-50"
-              href="/cadastro-produto"
-            >
+            <a className="nav-link text-white opacity-50" href="/cadastro-produto">
               Produtos
             </a>
-            <a
-              className="nav-link text-white opacity-50"
-              href="/cadastro-funcionario"
-            >
+            <a className="nav-link text-white opacity-50" href="/cadastro-funcionario">
               Funcionários
+            </a>
+            <a className="nav-link text-white opacity-50" href="/sobre">
+              Sobre
             </a>
             <hr />
           </div>
@@ -83,14 +85,8 @@ function NavBar() {
                 </a>
               </li>
               <li>
-                <a className="dropdown-item" href="/sobre">
-                  Sobre
-                </a>
-              </li>
-              <li>
                 <hr className="dropdown-divider" />
               </li>
-
               <li>
                 <a className="dropdown-item" href="/">
                   Sair
