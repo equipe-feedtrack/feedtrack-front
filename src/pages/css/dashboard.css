@@ -29,10 +29,6 @@
     background-color: #1a1a1a;
 }
 
-h1, h2, h5 {
-    color: #ffc107;
-    margin-bottom: 10px; 
-}
 
 .container {
     padding: 10px; 
@@ -41,13 +37,3 @@ h1, h2, h5 {
 .row {
     margin-bottom: 5px; 
 }
-
-canvas {
-    margin-bottom: 5px; 
-    height: 350px !important; 
-    width: 100% !important; 
-}
-
-footer{
-    color: lightgray;
-  }
