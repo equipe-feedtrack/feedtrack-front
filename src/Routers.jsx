@@ -5,10 +5,11 @@ import Dashboard from './pages/Dashboard';
 import Login from './pages/Login';
 import RegistroFeedback from './pages/RegistroFeedback';
 import CadastroCliente from './pages/CadastroCliente';
-import CadastroProduto from './pages/CadastroProduto.jsx';
-import CadastroFuncionario from './pages/CadastroFuncionario.jsx';
+import CadastroProduto from './pages/CadastroProduto';
+import CadastroFuncionario from './pages/CadastroFuncionario';
 import Sobre from './pages/Sobre';
-import Configuracoes from './pages/Configuracoes.jsx';
+import Configuracoes from './pages/Configuracoes';
+import ListarClientes from './pages/ListarClientes.jsx';
 
 const Router = () => {
   return (
@@ -16,9 +17,14 @@ const Router = () => {
       <Route path='/' element={<Login/>}></Route>
       <Route path="/dashboard" element={<Dashboard />} />
       <Route path="/registro-feedback" element={<RegistroFeedback />} />
-      <Route path="/cadastro-cliente" element={<CadastroCliente />} />
-      <Route path="/cadastro-produto" element={<CadastroProduto />} />
-      <Route path="/cadastro-funcionario" element={<CadastroFuncionario />} />
+
+      <Route path='/clientes' element={<ListarClientes />} />
+      <Route path="/clientes/novo" element={<CadastroCliente />} />
+
+
+
+      <Route path="/produtos/listar" element={<CadastroProduto />} />
+      <Route path="/funcionarios/listar" element={<CadastroFuncionario />} />
       <Route path="/sobre" element={<Sobre />} />
       <Route path="/configuracoes" element={<Configuracoes />} />
     </Routes>

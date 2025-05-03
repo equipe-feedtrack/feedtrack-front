@@ -116,7 +116,7 @@ const RegistroFeedback = () => {
         )}
 
         <div className="table-responsive">
-          <table className="table table-dark table-striped mt-5 w-75 m-auto">
+          <table className="table table-striped mt-5 w-75 m-auto">
             <thead>
               <tr>
                 <th>Nome</th>

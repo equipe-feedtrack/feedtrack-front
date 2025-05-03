@@ -1,215 +1,266 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import NavBar from "../components/NavBar";
-import './css/dashboard.css';
-import { Chart } from 'chart.js/auto'; // Importe a classe Chart
-import { useNavigate } from 'react-router-dom';
+import "./css/dashboard.css";
+import { Chart } from "chart.js/auto"; // Importe a classe Chart
 
 function Dashboard() {
+  // Estados para armazenar os dados
+  const [totalFeedbacks, setTotalFeedbacks] = useState([0]);
+  const [taxaRespostaPercentual, setTaxaRespostaPercentual] = useState("0.00");
+  const [satisfacaoMedia, setSatisfacaoMedia] = useState("0.00");
+  const [alertasNaoRespondidos, setAlertasNaoRespondidos] = useState(0);
+  const [feedbacksRecentes, setFeedbacksRecentes] = useState([]);
+  const [palavrasPositivas, setPalavrasPositivas] = useState([
+    { text: "ótimo", value: 15 },
+    { text: "excelente", value: 12 },
+    { text: "rápido", value: 10 },
+    { text: "adorei", value: 9 },
+    { text: "bom", value: 8 },
+  ]);
+  const [palavrasNegativas, setPalavrasNegativas] = useState([
+    { text: "demorado", value: 7 },
+    { text: "ruim", value: 6 },
+    { text: "péssimo", value: 5 },
+    { text: "insatisfeito", value: 4 },
+    { text: "problema", value: 3 },
+  ]);
 
-  const navigate = useNavigate();
-
-  const options = {
-    devicePixelRatio: 2,
-    responsive: true,
-    maintainAspectRatio: false
-  };
-
-  // Criamos refs para os elementos canvas
-  const idiomasChartRef = useRef(null);
-  const atividadesChartRef = useRef(null);
-  const receitaChartRef = useRef(null);
-  const crescimentoChartRef = useRef(null);
-
-  // Criamos refs para as instâncias dos gráficos
-  const idiomasChartInstance = useRef(null);
-  const atividadesChartInstance = useRef(null);
-  const receitaChartInstance = useRef(null);
-  const crescimentoChartInstance = useRef(null);
+  // Referências para os elementos canvas e instâncias dos gráficos
+  const pizzaChartRef = useRef(null);
+  const linhaChartRef = useRef(null);
+  const barraProdutoChartRef = useRef(null);
+  const pizzaChartInstance = useRef(null);
+  const linhaChartInstance = useRef(null);
+  const barraProdutoChartInstance = useRef(null);
 
   useEffect(() => {
-    const idiomasCtx = idiomasChartRef.current?.getContext('2d');
-    const atividadesCtx = atividadesChartRef.current?.getContext('2d');
-    const receitaCtx = receitaChartRef.current?.getContext('2d');
-    const crescimentoCtx = crescimentoChartRef.current?.getContext('2d');
+    // Dados de exemplo (substitua pelos seus dados reais)
+    const dadosTotalFeedbacks = [150];
+    const dadosTaxaResposta = { respondidos: 120, totalContatados: 150 };
+    const notasSatisfacao = [4, 5, 3, 5, 4, 4, 5, 3, 2, 4];
+    const tendenciaSatisfacao = [
+      { mes: "Jan", media: 3.8 },
+      { mes: "Fev", media: 4.1 },
+      { mes: "Mar", media: 3.9 },
+      { mes: "Abr", media: 4.3 },
+      { mes: "Mai", media: 4.0 },
+    ];
+    const sentimentos = { positivo: 70, negativo: 20, neutro: 60 };
 
-    if (idiomasCtx) {
-      if (idiomasChartInstance.current) {
-        idiomasChartInstance.current.destroy(); // Destrói o gráfico existente
+    const dadosFeedbacksRecentes = [
+      { data: "2023-10-26", produto: "Produto A", comentario: "Muito bom!" },
+      { data: "2023-10-25", produto: "Serviço B", comentario: "Poderia melhorar." },
+      { data: "2023-10-24", produto: "Produto C", comentario: "Excelente atendimento." },
+    ];
+    const dadosAlertasPendencias = { negativosUrgentes: 5, naoRespondidos: 12 };
+    const satisfacaoPorProduto = [
+      { produto: "Produto A", media: 4.5 },
+      { produto: "Produto B", media: 3.8 },
+      { produto: "Produto C", media: 4.2 },
+    ];
+
+    
+
+    // Atualiza os estados com os dados
+    setTotalFeedbacks(dadosTotalFeedbacks);
+    setTaxaRespostaPercentual(((dadosTaxaResposta.respondidos / dadosTaxaResposta.totalContatados) * 100).toFixed(2));
+    setSatisfacaoMedia((notasSatisfacao.reduce((a, b) => a + b, 0) / notasSatisfacao.length).toFixed(2));
+    setAlertasNaoRespondidos(dadosAlertasPendencias.naoRespondidos);
+    setFeedbacksRecentes(dadosFeedbacksRecentes);
+
+    // --- Gráfico de Pizza (Análise de Sentimento) ---
+    const pizzaChartCanvas = pizzaChartRef.current?.getContext("2d");
+    if (pizzaChartCanvas) {
+      if (pizzaChartInstance.current) {
+        pizzaChartInstance.current.destroy();
       }
-      idiomasChartInstance.current = new Chart(idiomasCtx, {
-        type: 'pie',
+      pizzaChartInstance.current = new Chart(pizzaChartCanvas, {
+        type: "pie",
         data: {
-          labels: ['Camisa', 'Tênis', 'Short', 'Boné'],
-          datasets: [{
-            data: [300, 150, 100, 50],
-            backgroundColor: ['#ffc107', '#fff', '#555', '#1a1a1a']
-          }]
+          labels: ["Positivo", "Negativo", "Neutro"],
+          datasets: [
+            {
+              label: "Sentimento dos Feedbacks",
+              data: [sentimentos.positivo, sentimentos.negativo, sentimentos.neutro],
+              backgroundColor: [
+                "rgba(75, 192, 192, 0.6)",
+                "rgba(255, 99, 132, 0.6)",
+                "rgba(255, 206, 86, 0.6)",
+              ],
+              borderColor: ["rgba(75, 192, 192, 1)", "rgba(255, 99, 132, 1)", "rgba(255, 206, 86, 1)"],
+              borderWidth: 1,
+            },
+          ],
         },
-        options
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: { position: "bottom" },
+            title: { display: true, text: "Análise de Sentimento dos Feedbacks" },
+          },
+        },
       });
     }
 
-    if (atividadesCtx) {
-      if (atividadesChartInstance.current) {
-        atividadesChartInstance.current.destroy(); // Destrói o gráfico existente
+    // --- Gráfico de Linha (Tendência de Satisfação) ---
+    const linhaChartCanvas = linhaChartRef.current?.getContext("2d");
+    if (linhaChartCanvas) {
+      if (linhaChartInstance.current) {
+        linhaChartInstance.current.destroy();
       }
-      atividadesChartInstance.current = new Chart(atividadesCtx, {
-        type: 'bar',
+      linhaChartInstance.current = new Chart(linhaChartCanvas, {
+        type: "line",
         data: {
-          labels: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun'],
-          datasets: [{
-            label: 'Atividades',
-            data: [50, 60, 70, 90, 110, 120],
-            backgroundColor: ['#ffc107']
-          }]
+          labels: tendenciaSatisfacao.map((item) => item.mes),
+          datasets: [
+            {
+              label: "Satisfação Média",
+              data: tendenciaSatisfacao.map((item) => item.media),
+              borderColor: "rgba(54, 162, 235, 1)",
+              backgroundColor: "rgba(54, 162, 235, 0.2)",
+              borderWidth: 2,
+              pointRadius: 5,
+              pointBackgroundColor: "rgba(54, 162, 235, 1)",
+            },
+          ],
         },
-        options
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            title: { display: true, text: "Tendência de Satisfação ao Longo do Tempo" },
+          },
+          scales: {
+            y: { beginAtZero: true, title: { display: true, text: "Média de Satisfação" } },
+            x: { title: { display: true, text: "Mês" } },
+          },
+        },
       });
     }
 
-    if (receitaCtx) {
-      if (receitaChartInstance.current) {
-        receitaChartInstance.current.destroy(); // Destrói o gráfico existente
+    // --- Gráfico de Barras (Comparativo de Satisfação por Produto) ---
+    const barraProdutoChartCanvas = barraProdutoChartRef.current?.getContext("2d");
+    if (barraProdutoChartCanvas) {
+      if (barraProdutoChartInstance.current) {
+        barraProdutoChartInstance.current.destroy();
       }
-      receitaChartInstance.current = new Chart(receitaCtx, {
-        type: 'line',
+      barraProdutoChartInstance.current = new Chart(barraProdutoChartCanvas, {
+        type: "bar",
         data: {
-          labels: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun'],
-          datasets: [{
-            label: 'Receita',
-            data: [5000, 7000, 8000, 10000, 12000, 15000],
-            borderColor: '#ffc107',
-            backgroundColor: 'rgba(255, 193, 7, 0.2)',
-            tension: 0.3
-          }]
+          labels: satisfacaoPorProduto.map((item) => item.produto),
+          datasets: [
+            {
+              label: "Satisfação Média por Produto",
+              data: satisfacaoPorProduto.map((item) => item.media),
+              backgroundColor: "rgba(255, 159, 64, 0.6)",
+              borderColor: "rgba(255, 159, 64, 1)",
+              borderWidth: 1,
+            },
+          ],
         },
-        options
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            title: { display: true, text: "Comparativo de Satisfação por Produto" },
+          },
+          scales: {
+            y: { beginAtZero: true, title: { display: true, text: "Média de Satisfação" } },
+            x: { title: { display: true, text: "Produto" } },
+          },
+        },
       });
     }
 
-    if (crescimentoCtx) {
-      if (crescimentoChartInstance.current) {
-        crescimentoChartInstance.current.destroy(); // Destrói o gráfico existente
-      }
-      crescimentoChartInstance.current = new Chart(crescimentoCtx, {
-        type: 'radar',
-        data: {
-          labels: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun'],
-          datasets: [{
-            label: 'Crescimento',
-            data: [15, 20, 25, 30, 35, 40],
-            borderColor: '#ffc107',
-            backgroundColor: 'rgba(255, 193, 7, 0.3)'
-          }]
-        },
-        options
-      });
-    }
-
-    // Função de limpeza do useEffect
+    // Função de limpeza para destruir os gráficos quando o componente for desmontado
     return () => {
-      if (idiomasChartInstance.current) {
-        idiomasChartInstance.current.destroy();
-        idiomasChartInstance.current = null;
+      if (pizzaChartInstance.current) {
+        pizzaChartInstance.current.destroy();
       }
-      if (atividadesChartInstance.current) {
-        atividadesChartInstance.current.destroy();
-        atividadesChartInstance.current = null;
+      if (linhaChartInstance.current) {
+        linhaChartInstance.current.destroy();
       }
-      if (receitaChartInstance.current) {
-        receitaChartInstance.current.destroy();
-        receitaChartInstance.current = null;
-      }
-      if (crescimentoChartInstance.current) {
-        crescimentoChartInstance.current.destroy();
-        crescimentoChartInstance.current = null;
+      if (barraProdutoChartInstance.current) {
+        barraProdutoChartInstance.current.destroy();
       }
     };
-  }, [options]); // Executa o efeito quando as 'options' mudam (ou na montagem)
+  }, []);
 
-  function navegar(path) {
-    return () => {
-      navigate(path);
-    };
-  }
-
-  const style = {
-    cursor: 'pointer',
-  }
+  
 
   return (
     <div>
-      <NavBar/>
-      <main className="col-10 container-fluid">
-        <div className="flex-grow-1">
-          <div className="container mt-4">
-            <div className="row text-center">
-              <div className="col-md-4">
-                <div className="card">
-                  <div className="card-body" style={style} onClick={navegar('/registro-feedback')} >
-                    <h5 className="card-title ">Feedbacks</h5>
-                    <h2 className="text-light "><i className="fas fa-comments text-warning"></i> 150</h2>
-                  </div>
-                </div>
-              </div>
-              <div className="col-md-4">
-                <div className="card">
-                  <div className="card-body" style={style} onClick={navegar('/cadastro-cliente')} >
-                    <h5 className="card-title">Clientes</h5>
-                    <h2 className="text-light"><i className="fas fa-users text-warning"></i> 300</h2>
-                  </div>
-                </div>
-              </div>
-              <div className="col-md-4">
-                <div className="card">
-                  <div className="card-body" style={style} onClick={navegar('/cadastro-produto')} >
-                    <h5 className="card-title">Produtos</h5>
-                    <h2 className="text-light"><i className="fas fa-box text-warning"></i> 50</h2>
-                  </div>
-                </div>
-              </div>
-            </div>
+      <NavBar />
+      <div className="container-fluid p-4">
+        <div className="row">
+          <div className="card col-lg-3 col-md-6 col-sm-12 mb-3">
+            <h3 className="text-dark text-center">Total de feedbacks recebidos</h3>
+            <p className="lead text-center">{totalFeedbacks[0]}</p>
           </div>
-          <div className="container mt-5" id="graficos">
-            <div className="row">
-              <div className="col-md-6">
-                <div className="card">
-                  <div className="card-header">Produtos</div>
-                  <div className="card-body">
-                    <canvas ref={idiomasChartRef} id="idiomasChart"></canvas>
-                  </div>
-                </div>
-              </div>
-              <div className="col-md-6">
-                <div className="card">
-                  <div className="card-header">Atividades Mensais</div>
-                  <div className="card-body">
-                    <canvas ref={atividadesChartRef} id="atividadesChart"></canvas>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="row mt-4">
-              <div className="col-md-6">
-                <div className="card">
-                  <div className="card-header">Receita</div>
-                  <div className="card-body">
-                    <canvas ref={receitaChartRef} id="receitaChart"></canvas>
-                  </div>
-                </div>
-              </div>
-              <div className="col-md-6">
-                <div className="card">
-                  <div className="card-header">Crescimento de Usuários</div>
-                  <div className="card-body">
-                    <canvas ref={crescimentoChartRef} id="crescimentoChart"></canvas>
-                  </div>
-                </div>
-              </div>
-            </div>
+          <div className="card col-lg-3 col-md-6 col-sm-12 mb-3">
+            <h3 className="text-dark text-center">Taxa de Resposta</h3>
+            <p className="lead text-center">{taxaRespostaPercentual}%</p>
+          </div>
+          <div className="card col-lg-3 col-md-6 col-sm-12 mb-3">
+            <h3 className="text-dark text-center">Satisfação Geral (Média)</h3>
+            <p className="lead text-center">{satisfacaoMedia}</p>
+          </div>
+          <div className="card col-lg-3 col-md-6 col-sm-12 mb-3">
+            <h3 className="text-dark text-center">Alertas Não Respondidos</h3>
+            <p className="lead text-center">{alertasNaoRespondidos}</p>
           </div>
         </div>
-      </main>
+
+        <div className="row">
+          <div className="card col-lg-2 col-md-6 col-sm-12 mb-3">
+            <canvas ref={pizzaChartRef} id="pizzaChart" width="400"></canvas>
+          </div>
+          <div className="card col-lg-6 col-md-6 col-sm-12 mb-3">
+            <canvas ref={linhaChartRef} id="linhaChart" width="400" height="300"></canvas>
+          </div>
+          <div className="card col-lg-4 col-md-12 col-sm-12 mb-3">
+            <h3>Feedbacks Recentes</h3>
+            <ul className="list-group">
+              {feedbacksRecentes.map((feedback, index) => (
+                <li key={index} className="list-group-item">
+                  <p className="mb-1"><strong>Data:</strong> {feedback.data}</p>
+                  {feedback.produto && <p className="mb-1"><strong>Produto:</strong> {feedback.produto}</p>}
+                  <p className="mb-0"><strong>Comentário:</strong> {feedback.comentario}</p>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+        <div className="row">
+            <div className="d-flex flex-column col-lg-8 col-md-12 col-sm-12 mb-3"> 
+              <div className="mb-3 h-100">
+                <h3 className="text-dark text-center">Palavras Positivas</h3>
+                <ul className="list-group">
+                  {palavrasPositivas.map((palavra, index) => (
+                    <li key={index} className="list-group-item">
+                      {palavra.text} ({palavra.value})
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              <div className=" mb-3 h-100">
+                <h3 className="text-dark text-center">Palavras Negativas</h3>
+                <ul className="list-group">
+                  {palavrasNegativas.map((palavra, index) => (
+                    <li key={index} className="list-group-item">
+                      {palavra.text} ({palavra.value})
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+
+          <div className="card col-lg-4 col-md-12 col-sm-12 mb-3">
+            <canvas ref={barraProdutoChartRef} id="barraProdutoChart" width="400" height="400"></canvas>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }

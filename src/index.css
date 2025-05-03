@@ -1,8 +1,16 @@
+@font-face {
+    font-family: 'poppins-medium';
+    src: url('/fonts/Poppins/Poppins-Medium.ttf');
+}
+
 body {
-    background-color: #212529;
-    color: white;
+    background-color: #ffffff;
+    color: #212529;
+    font-family: 'poppins-medium', sans-serif;
+    
 }
 
 nav {
     background-color: #212529;
 }
+

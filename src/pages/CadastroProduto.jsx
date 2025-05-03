@@ -376,7 +376,7 @@ function CadastroProduto() {
         )}
 
 <div className="table-responsive">
-          <table className="tabela col-xl-6 col-lg-8 col-md-10 m-auto mt-5 table table-dark table-striped">
+          <table className="tabela col-xl-6 col-lg-8 col-md-10 m-auto mt-5 table table-striped">
             <thead>
               <tr>
                 <th>Código</th>
