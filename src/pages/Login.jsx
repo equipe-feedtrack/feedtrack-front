@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import "./css/login.css";
 
 function Login() {
   const [usuario, setUsuario] = useState("");
@@ -23,10 +24,9 @@ function Login() {
   };
 
   return (
-    <div>
-
-      <div className="container-fluid vh-100 d-flex justify-content-center align-items-center flex-column">
-      <h1 className="text-center">FeedTrack - Software</h1>
+    <div className=" d-flex flex-column justify-content-center align-items-center login-page">  
+      <div className="container-fluid d-flex justify-content-center align-items-center flex-column">
+        <h1 className="text-center">FeedTrack - Software</h1>
         <div className="row w-100 justify-content-center">
           <div className="col-10 col-md-8 col-lg-6 d-flex">
             {/* Imagem centralizada verticalmente */}
@@ -94,13 +94,6 @@ function Login() {
             </form>
           </div>
         </div>
-        <footer className="position-absolute bottom-0 w-100 text-center">
-          <hr />©{" "}
-          <a href="#" target="_blank">
-            FeedTrack.com.br
-          </a>{" "}
-          2024
-        </footer>
       </div>
     </div>
   );

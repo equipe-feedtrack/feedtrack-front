@@ -10,6 +10,7 @@ import CadastroFuncionario from './pages/CadastroFuncionario';
 import Sobre from './pages/Sobre';
 import Configuracoes from './pages/Configuracoes';
 import ListarClientes from './pages/ListarClientes.jsx';
+import Dash from './pages/admin/Dash.jsx';
 
 const Router = () => {
   return (
@@ -21,12 +22,12 @@ const Router = () => {
       <Route path='/clientes' element={<ListarClientes />} />
       <Route path="/clientes/novo" element={<CadastroCliente />} />
 
-
-
       <Route path="/produtos/listar" element={<CadastroProduto />} />
       <Route path="/funcionarios/listar" element={<CadastroFuncionario />} />
       <Route path="/sobre" element={<Sobre />} />
       <Route path="/configuracoes" element={<Configuracoes />} />
+
+      <Route path="/admin" element={<Dash />} />
     </Routes>
   );
 };

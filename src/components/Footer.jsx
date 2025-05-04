@@ -2,7 +2,7 @@ import React from "react";
 
 function Footer() {
   return (
-    <footer className="text-center py-3 col">
+    <footer className="text-center">
       <p>&copy; 2024 FeedTrack. Todos os direitos reservados.</p>
     </footer>
   );
