@@ -12,7 +12,6 @@ function NavBar() {
         </a>
         <button
           className="navbar-toggler"
-          style={{ backgroundColor: "#61677A" }}
           type="button"
           data-bs-toggle="collapse"
           data-bs-target="#navbarNavAltMarkup"

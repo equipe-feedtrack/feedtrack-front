@@ -88,9 +88,6 @@ function Login() {
               <button type="submit" className="btn btn-primary mb-2">
                 Login
               </button>
-              <div>
-                <a href="#">Cadastre-se caso não tenha login!</a>
-              </div>
             </form>
           </div>
         </div>
