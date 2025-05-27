@@ -2,27 +2,13 @@ import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPencil, faTrash } from '@fortawesome/free-solid-svg-icons';
 import NavBar from '../components/NavBar';
+import {api} from '../api/axios';
 
-const clientesBase = [
-  { cpf: '123.456.789-00', telefone: '(11) 91234-5678', nome: 'Ana Clara Souza', dataNascimento: '1992-05-14' },
-  { cpf: '987.654.321-00', telefone: '(21) 99876-5432', nome: 'Bruno Henrique Lima', dataNascimento: '1988-09-22' },
-  { cpf: '456.789.123-00', telefone: '(31) 98765-4321', nome: 'Carla Menezes Rocha', dataNascimento: '2000-01-30' },
-  { cpf: '321.654.987-00', telefone: '(41) 97654-3210', nome: 'Diego Alves Ferreira', dataNascimento: '1995-07-09' },
-  { cpf: '111.222.333-44', telefone: '(51) 98888-7777', nome: 'Eduarda Martins', dataNascimento: '1997-11-03' },
-  { cpf: '222.333.444-55', telefone: '(61) 99999-0000', nome: 'Felipe Costa', dataNascimento: '1985-03-18' },
-  { cpf: '333.444.555-66', telefone: '(71) 97777-8888', nome: 'Gabriela Oliveira', dataNascimento: '1991-06-25' },
-  { cpf: '444.555.666-77', telefone: '(81) 96666-5555', nome: 'Hugo Pereira', dataNascimento: '1989-12-01' },
-  { cpf: '555.666.777-88', telefone: '(91) 95555-4444', nome: 'Isabela Santos', dataNascimento: '2002-08-10' },
-  { cpf: '666.777.888-99', telefone: '(27) 94444-3333', nome: 'João Ricardo Alves', dataNascimento: '1993-04-07' },
-  { cpf: '777.888.999-01', telefone: '(32) 93333-2222', nome: 'Laura Souza', dataNascimento: '1998-02-15' },
-  { cpf: '888.999.000-12', telefone: '(47) 92222-1111', nome: 'Marcos Vinicius', dataNascimento: '1987-10-29' },
-  { cpf: '999.000.111-23', telefone: '(55) 91111-0000', nome: 'Natália Rodrigues', dataNascimento: '2001-07-21' },
-  { cpf: '000.111.222-34', telefone: '(62) 90000-9999', nome: 'Pedro Henrique', dataNascimento: '1996-09-05' },
-  { cpf: '111.222.333-56', telefone: '(73) 99888-7777', nome: 'Raquel Fernandes', dataNascimento: '1990-11-12' },
-];
+
+
 
 function ListarClientes() {
-  const [clientes, setClientes] = useState(clientesBase);
+  const [clientes, setClientes] = useState([]);
   const [clienteEditando, setClienteEditando] = useState(null);
   const [modalEditarClienteVisivel, setModalEditarClienteVisivel] = useState(false);
   const [modalDeletarClienteVisivel, setModalDeletarClienteVisivel] = useState(null);
@@ -30,6 +16,18 @@ function ListarClientes() {
   const [paginaAtual, setPaginaAtual] = useState(0);
   const clientesPorPagina = 5;
   const totalPaginas = Math.ceil(clientes.length / clientesPorPagina);
+
+  api.get('/users').then((response) => {
+    console.log(response.data);
+    const clientes = response.data.map((cliente) => ({
+      cpf: cliente.id,
+      telefone: cliente.phone,
+      nome: cliente.name,
+      dataNascimento: cliente.dataNascimento ? new Date(cliente.dataNascimento).toLocaleDateString('pt-BR') : '-',
+    }));
+
+    setClientes(clientes);
+  });
 
   const mostrarAlerta = (mensagem, tipo) => {
     setAlerta({ mensagem, tipo });

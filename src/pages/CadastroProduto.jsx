@@ -2,26 +2,10 @@ import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPencil, faTrash } from '@fortawesome/free-solid-svg-icons';
 import NavBar from '../components/NavBar';
+import {products} from '../api/axios';
 
 function CadastroProduto() {
-  const produtosBase = [
-    { codigo: 'P001', nome: 'Camiseta Branca', setor: 'Vestuário', dataEntrada: '2025-04-01' },
-    { codigo: 'P002', nome: 'Caneca Personalizada', setor: 'Brindes', dataEntrada: '2025-04-05' },
-    { codigo: 'P003', nome: 'Boné Bordado', setor: 'Acessórios', dataEntrada: '2025-04-10' },
-    { codigo: 'P004', nome: 'Moletom Canguru', setor: 'Vestuário', dataEntrada: '2025-04-15' },
-    { codigo: 'P005', nome: 'Chaveiro Metálico', setor: 'Brindes', dataEntrada: '2025-04-20' },
-    { codigo: 'P006', nome: 'Calça Jeans', setor: 'Vestuário', dataEntrada: '2025-04-25' },
-    { codigo: 'P007', nome: 'Agenda 2025', setor: 'Papelaria', dataEntrada: '2025-04-30' },
-    { codigo: 'P008', nome: 'Mouse Sem Fio', setor: 'Informática', dataEntrada: '2025-05-05' },
-    { codigo: 'P009', nome: 'Livro de Receitas', setor: 'Livros', dataEntrada: '2025-05-10' },
-    { codigo: 'P010', nome: 'Óculos de Sol', setor: 'Acessórios', dataEntrada: '2025-05-15' },
-    { codigo: 'P011', nome: 'Vaso de Cerâmica', setor: 'Decoração', dataEntrada: '2025-05-20' },
-    { codigo: 'P012', nome: 'Fones de Ouvido Bluetooth', setor: 'Eletrônicos', dataEntrada: '2025-05-25' },
-    { codigo: 'P013', nome: 'Copo Térmico', setor: 'Cozinha', dataEntrada: '2025-05-30' },
-    { codigo: 'P014', nome: 'Cinto de Couro', setor: 'Acessórios', dataEntrada: '2025-06-05' },
-    { codigo: 'P015', nome: 'Quadro Decorativo', setor: 'Decoração', dataEntrada: '2025-06-10' },
-  ];
-  const [produtos, setProdutos] = useState(produtosBase);
+  const [produtos, setProdutos] = useState([]);
   const [novoProduto, setNovoProduto] = useState({ codigo: '', nome: '', setor: '', dataEntrada: '' });
   const [produtoEditando, setProdutoEditando] = useState(null);
   const [modalNovoProdutoVisivel, setModalNovoProdutoVisivel] = useState(false);
@@ -31,6 +15,18 @@ function CadastroProduto() {
   const [paginaAtual, setPaginaAtual] = useState(0);
   const produtosPorPagina = 5;
   const totalPaginas = Math.ceil(produtos.length / produtosPorPagina);
+
+  products.get('/products').then((response)=>{
+    const products = response.data.map((product)=>({
+      codigo: product.id,
+      nome: product.title,
+      setor: product.category,
+      dataEntrada: product.date_added ? new Date(product.date_added).toLocaleDateString('pt-BR') : '-',
+    }))
+
+    setProdutos(products)
+  })
+
 
   const produtosDaPagina = produtos.slice(
     paginaAtual * produtosPorPagina,
@@ -375,7 +371,7 @@ function CadastroProduto() {
           </div>
         )}
 
-<div className="table-responsive">
+        <div className="table-responsive">
           <table className="tabela col-xl-6 col-lg-8 col-md-10 m-auto mt-5 table table-striped">
             <thead>
               <tr>
@@ -414,26 +410,26 @@ function CadastroProduto() {
           </table>
         </div>
 
-      <div className="d-flex justify-content-center mt-3">
-        <button
-          className="btn btn-outline-secondary me-2"
-          onClick={paginaAnterior}
-          disabled={paginaAtual === 0}
-        >
-          Anterior
-        </button>
-        <span>Página {paginaAtual + 1} de {totalPaginas}</span>
-        <button
-          className="btn btn-outline-secondary ms-2"
-          onClick={proximaPagina}
-          disabled={paginaAtual === totalPaginas - 1}
-        >
-          Próximo
-        </button>
-      </div>
-    </main>
-  </div>
-);
+        <div className="d-flex justify-content-center mt-3">
+          <button
+            className="btn btn-outline-secondary me-2"
+            onClick={paginaAnterior}
+            disabled={paginaAtual === 0}
+          >
+            Anterior
+          </button>
+          <span>Página {paginaAtual + 1} de {totalPaginas}</span>
+          <button
+            className="btn btn-outline-secondary ms-2"
+            onClick={proximaPagina}
+            disabled={paginaAtual === totalPaginas - 1}
+          >
+            Próximo
+          </button>
+        </div>
+      </main>
+    </div>
+  );
 }
 
 export default CadastroProduto;

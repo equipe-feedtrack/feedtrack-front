@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import NavBar from '../components/NavBar';
 
+
 function CadastroCliente() {
   const [novoCliente, setNovoCliente] = useState({ cpf: '', telefone: '', nome: '', dataNascimento: '' });
   const [alerta, setAlerta] = useState(null);
