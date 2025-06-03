@@ -46,7 +46,7 @@ function NavBar() {
                   </a>
                 </li>
                 <li>
-                  <a className="dropdown-item" href="#">
+                  <a className="dropdown-item" href="/funcionarios/desempenho">
                     Desempenho dos Funcionários
                   </a>
                 </li>

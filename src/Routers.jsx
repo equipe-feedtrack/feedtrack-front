@@ -11,6 +11,7 @@ import Sobre from './pages/Sobre';
 import Configuracoes from './pages/Configuracoes';
 import ListarClientes from './pages/ListarClientes.jsx';
 import Dash from './pages/admin/Dash.jsx';
+import DesempenhoFuncionarios from './pages/DesempenhoFuncionarios';
 
 const Router = () => {
   return (
@@ -24,6 +25,8 @@ const Router = () => {
 
       <Route path="/produtos/listar" element={<CadastroProduto />} />
       <Route path="/funcionarios/listar" element={<CadastroFuncionario />} />
+      <Route path="/funcionarios/desempenho" element={<DesempenhoFuncionarios />} />
+
       <Route path="/sobre" element={<Sobre />} />
       <Route path="/configuracoes" element={<Configuracoes />} />
 

@@ -57,6 +57,17 @@ function Dashboard() {
       { produto: "Produto A", media: 4.5 },
       { produto: "Produto B", media: 3.8 },
       { produto: "Produto C", media: 4.2 },
+      { produto: "Produto C", media: 4.2 },
+      { produto: "Produto C", media: 4.2 },
+      { produto: "Produto C", media: 4.2 },
+      { produto: "Produto C", media: 4.2 },
+      { produto: "Produto C", media: 4.2 },
+      { produto: "Produto C", media: 4.2 },
+      { produto: "Produto C", media: 4.2 },
+      { produto: "Produto C", media: 4.2 },
+      { produto: "Produto C", media: 4.2 },
+      { produto: "Produto C", media: 4.2 },
+      { produto: "Produto C", media: 4.2 },
     ];
 
     
@@ -194,32 +205,32 @@ function Dashboard() {
       <NavBar />
       <div className="container-fluid p-4">
         <div className="row">
-          <div className="card bg-light mr-3 p-3 rounded shadow-sm col-lg-7 col-md-6 col-sm-12 mb-3 ">
+          <div className="card bg-light mr-3 p-3 rounded shadow-sm col-lg-7 col-md-4 col-sm-12 mb-3 ">
             <h3 className="card-title">Total de feedbacks recebidos</h3>
             <p className="card-text display-4">{totalFeedbacks[0]}</p>
           </div>
-          <div className="card bg-light mr-3 p-3 rounded shadow-sm col-lg-2 col-md-6 col-sm-12 mb-3">
+          <div className="card bg-light mr-3 p-3 rounded shadow-sm col-lg-2 col-md-4 col-sm-12 mb-3">
             <h3 className="card-title">Taxa de Resposta</h3>
             <p className="card-text display-4">{taxaRespostaPercentual}%</p>
           </div>
-          <div className="card bg-light p-3 rounded shadow-sm col-lg-2 col-md-6 col-sm-12 mb-3">
+          <div className="card bg-light p-3 rounded shadow-sm col-lg-2 col-md-3 col-sm-12 mb-3">
             <h3 className="card-title">Satisfação Geral (Média)</h3>
             <p className="card-text display-4">{satisfacaoMedia}</p>
           </div>
-          <div className="card bg-light p-3 rounded shadow-sm col-lg-12 col-md-6 col-sm-12 mb-3">
+          <div className="card bg-light p-3 rounded shadow-sm col-lg-12 col-md-12 col-sm-12 mb-3">
             <h3 className="card-title">Alertas Não Respondidos</h3>
             <p className="card-text display-4">{alertasNaoRespondidos}</p>
           </div>
         </div>
 
         <div className="row m-auto justify-content-center">
-          <div className="card bg-light m-2 p-3 rounded shadow-sm col-lg-2 col-md-6 col-sm-12 mb-3">
+          <div className="card bg-light m-2 p-3 rounded shadow-sm col-lg-2 col-md-4 col-sm-12 mb-3">
             <canvas ref={pizzaChartRef} id="pizzaChart" width="400"></canvas>
           </div>
           <div className="card bg-light m-2 p-3 rounded shadow-sm col-lg-6 col-md-6 col-sm-12 mb-3">
             <canvas ref={linhaChartRef} id="linhaChart" width="400" height="300"></canvas>
           </div>
-          <div className="card bg-light m-2 p-3 rounded shadow-sm col-lg-3 col-md-12 col-sm-12 mb-3">
+          <div className="card bg-light m-2 p-3 rounded shadow-sm col-lg-3 col-md-10 col-sm-12 mb-3">
             <h3>Feedbacks Recentes</h3>
             <ul className="list-group">
               {feedbacksRecentes.map((feedback, index) => (
@@ -233,7 +244,7 @@ function Dashboard() {
           </div>
         </div>
         <div className="row justify-content-center">
-            <div className="card bg-light mr-3 p-3 rounded shadow-sm d-flex flex-column col-lg-7 col-md-12 col-sm-12 mb-3"> 
+            <div className="card bg-light p-3 rounded shadow-sm d-flex flex-column col-lg-7 col-md-10 mr-3 col-sm-12 mb-3"> 
               <div className="mb-3 h-100">
                 <h3 className="text-dark text-center">Palavras Positivas</h3>
                 <ul className="list-group">
@@ -256,8 +267,8 @@ function Dashboard() {
               </div>
             </div>
 
-          <div className="card bg-light p-3 rounded shadow-sm col-lg-4 col-md-12 col-sm-12 mb-3">
-            <canvas ref={barraProdutoChartRef} id="barraProdutoChart" width="400" height="400"></canvas>
+          <div className="card bg-light p-3 rounded shadow-sm col-lg-4 col-md-10 col-sm-12 mb-3">
+            <canvas ref={barraProdutoChartRef} id="barraProdutoChart" width="400" height="200"></canvas>
           </div>
         </div>
       </div>
