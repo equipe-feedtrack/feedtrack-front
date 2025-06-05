@@ -8,7 +8,12 @@ function NavBar() {
     >
       <div className="container-fluid ">
         <a className="navbar-brand text-white" href="/dashboard">
-          Feedtrack
+          <img
+            src="./img/logo.png"
+            alt="Logo"
+            width={150}
+            className="d-inline-block align-text-top"
+          />
         </a>
         <button
           className="navbar-toggler"
@@ -120,7 +125,7 @@ function NavBar() {
                   </a>
                 </li>
                 <li>
-                  <a className="dropdown-item" href="#">
+                  <a className="dropdown-item" href="/produtos/novo">
                     Novo Produto/Serviço
                   </a>
                 </li>

@@ -1,33 +1,59 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPencil, faTrash } from '@fortawesome/free-solid-svg-icons';
 import NavBar from '../components/NavBar';
-import {api} from '../api/axios';
-
-
-
+import { api } from '../api/axios'; 
 
 function ListarClientes() {
   const [clientes, setClientes] = useState([]);
   const [clienteEditando, setClienteEditando] = useState(null);
   const [modalEditarClienteVisivel, setModalEditarClienteVisivel] = useState(false);
   const [modalDeletarClienteVisivel, setModalDeletarClienteVisivel] = useState(null);
+  const [modalVerMaisClienteVisivel, setModalVerMaisClienteVisivel] = useState(false);
+  const [clienteParaVerMais, setClienteParaVerMais] = useState(null);
   const [alerta, setAlerta] = useState(null);
   const [paginaAtual, setPaginaAtual] = useState(0);
   const clientesPorPagina = 5;
-  const totalPaginas = Math.ceil(clientes.length / clientesPorPagina);
+  
+  useEffect(() => {
+    // Busca os clientes da API apenas uma vez na montagem
+    api.get('/users').then((response) => {
+      console.log("Dados recebidos da API:", response.data);
+      
+      // Simulação de produtos para adicionar a cada cliente
+      const productsSimulated = [
+        { name: 'Notebook Gamer', purchaseDate: '2023-01-20' },
+        { name: 'Mouse Sem Fio', purchaseDate: '2023-01-25' },
+        { name: 'Teclado Mecânico', purchaseDate: '2023-02-10' },
+        { name: 'Smartphone Pro Max', purchaseDate: '2023-03-01' },
+        { name: 'Fone de Ouvido Bluetooth', purchaseDate: '2023-03-05' },
+        { name: 'Monitor Ultrawide', purchaseDate: '2023-04-10' },
+        { name: 'Câmera DSLR', purchaseDate: '2022-12-01' },
+        { name: 'Lente 50mm', purchaseDate: '2023-01-15' },
+        { name: 'Tripé Profissional', purchaseDate: '2023-02-01' },
+        { name: 'Smartwatch Esportivo', purchaseDate: '2023-05-10' },
+      ];
 
-  api.get('/users').then((response) => {
-    console.log(response.data);
-    const clientes = response.data.map((cliente) => ({
-      cpf: cliente.id,
-      telefone: cliente.phone,
-      nome: cliente.name,
-      dataNascimento: cliente.dataNascimento ? new Date(cliente.dataNascimento).toLocaleDateString('pt-BR') : '-',
-    }));
+      const clientesComProdutos = response.data.map((clienteApi) => {
+        // Embaralha e pega uma quantidade aleatória de produtos para cada cliente
+        const shuffledProducts = [...productsSimulated].sort(() => 0.5 - Math.random()); // Cria uma cópia antes de embaralhar
+        const numberOfProducts = Math.floor(Math.random() * (productsSimulated.length / 2)) + 1; // Pelo menos 1 produto
+        const assignedProducts = shuffledProducts.slice(0, numberOfProducts);
 
-    setClientes(clientes);
-  });
+        return {
+          cpf: clienteApi.id, 
+          telefone: clienteApi.phone,
+          nome: clienteApi.name,
+          dataNascimento: clienteApi.birthDate ? new Date(clienteApi.birthDate).toLocaleDateString('pt-BR') : '-',
+          productsPurchased: assignedProducts, 
+        };
+      });
+      setClientes(clientesComProdutos);
+    }).catch(error => {
+      console.error("Erro ao buscar clientes da API:", error);
+      mostrarAlerta("Erro ao carregar clientes. Tente novamente.", "danger");
+    });
+  }, []); // Array de dependências vazio para rodar apenas uma vez na montagem
 
   const mostrarAlerta = (mensagem, tipo) => {
     setAlerta({ mensagem, tipo });
@@ -41,9 +67,9 @@ function ListarClientes() {
     setClienteEditando({ ...clienteEditando, [name]: value });
   };
 
-  const abrirModalEditar = (index) => {
-    const indiceAbsoluto = paginaAtual * clientesPorPagina + index;
-    setClienteEditando({ ...clientes[indiceAbsoluto], index: indiceAbsoluto });
+  const abrirModalEditar = (absoluteIndex) => {
+    console.log('Abrindo modal de edição para o índice absoluto:', absoluteIndex);
+    setClienteEditando({ ...clientes[absoluteIndex], index: absoluteIndex });
     setModalEditarClienteVisivel(true);
   };
 
@@ -61,20 +87,29 @@ function ListarClientes() {
       mostrarAlerta('A Data de Nascimento é obrigatória.', 'danger');
       return;
     }
+    
     const novosClientes = [...clientes];
     novosClientes[clienteEditando.index] = {
       cpf: clienteEditando.cpf,
       telefone: clienteEditando.telefone,
       nome: clienteEditando.nome,
       dataNascimento: clienteEditando.dataNascimento,
+      productsPurchased: clienteEditando.productsPurchased, 
     };
     setClientes(novosClientes);
     setModalEditarClienteVisivel(false);
     mostrarAlerta('Cliente atualizado com sucesso!', 'success');
   };
 
-  const abrirModalDeletar = (index) => {
-    setModalDeletarClienteVisivel(paginaAtual * clientesPorPagina + index);
+  const abrirModalDeletar = (absoluteIndex) => {
+    console.log('Abrindo modal de exclusão para o índice absoluto:', absoluteIndex);
+    setModalDeletarClienteVisivel(absoluteIndex);
+  };
+
+  const abrirModalVerMais = (absoluteIndex) => {
+    console.log('Abrindo modal "Ver Mais" para o índice absoluto:', absoluteIndex);
+    setClienteParaVerMais(clientes[absoluteIndex]); 
+    setModalVerMaisClienteVisivel(true); 
   };
 
   const deletarCliente = () => {
@@ -82,11 +117,14 @@ function ListarClientes() {
     setClientes(novosClientes);
     setModalDeletarClienteVisivel(null);
     mostrarAlerta('Cliente excluído com sucesso!', 'success');
-    setPaginaAtual(0);
+    if (paginaAtual > 0 && novosClientes.length <= paginaAtual * clientesPorPagina) {
+        setPaginaAtual(paginaAtual - 1);
+    }
   };
 
   const proximaPagina = () => {
-    if (paginaAtual < totalPaginas - 1) {
+    const totalPaginasCalculadas = Math.ceil(clientes.length / clientesPorPagina);
+    if (paginaAtual < totalPaginasCalculadas - 1) {
       setPaginaAtual(paginaAtual + 1);
     }
   };
@@ -101,6 +139,8 @@ function ListarClientes() {
     paginaAtual * clientesPorPagina,
     (paginaAtual + 1) * clientesPorPagina
   );
+
+  const totalPaginasCalculadas = Math.ceil(clientes.length / clientesPorPagina);
 
   return (
     <div>
@@ -123,32 +163,42 @@ function ListarClientes() {
                 <th>Telefone</th>
                 <th>Nome</th>
                 <th>Data Nascimento</th>
+                <th>Produtos Comprados</th>
                 <th>Ações</th>
               </tr>
             </thead>
             <tbody>
-              {clientesDaPagina.map((cliente, index) => (
-                <tr key={index}>
-                  <td>{cliente.cpf}</td>
-                  <td>{cliente.telefone}</td>
-                  <td>{cliente.nome}</td>
-                  <td>{cliente.dataNascimento}</td>
-                  <td>
-                    <FontAwesomeIcon
-                      icon={faPencil}
-                      className="text-primary me-2"
-                      onClick={() => abrirModalEditar(index)}
-                      role="button"
-                    />
-                    <FontAwesomeIcon
-                      icon={faTrash}
-                      className="text-danger"
-                      onClick={() => abrirModalDeletar(index)}
-                      role="button"
-                    />
-                  </td>
-                </tr>
-              ))}
+              {clientesDaPagina.map((cliente) => {
+                const absoluteIndex = clientes.indexOf(cliente);
+                console.log(`Rendering cliente: ${cliente.nome}, Page Index: ${clientesDaPagina.indexOf(cliente)}, Absolute Index: ${absoluteIndex}`);
+                console.log(`Isso é o mesmo objeto na lista global? ${clientes[absoluteIndex] === cliente}`);
+
+                return (
+                  <tr key={cliente.cpf}> 
+                    <td>{cliente.cpf}</td>
+                    <td>{cliente.telefone}</td>
+                    <td>{cliente.nome}</td>
+                    <td>{cliente.dataNascimento}</td>
+                    <td className='text-primary' onClick={() => abrirModalVerMais(absoluteIndex)} role="button">
+                      ver mais...
+                    </td>
+                    <td>
+                      <FontAwesomeIcon
+                        icon={faPencil}
+                        className="text-primary me-2"
+                        onClick={() => abrirModalEditar(absoluteIndex)}
+                        role="button"
+                      />
+                      <FontAwesomeIcon
+                        icon={faTrash}
+                        className="text-danger"
+                        onClick={() => abrirModalDeletar(absoluteIndex)}
+                        role="button"
+                      />
+                    </td>
+                  </tr>
+                );
+              })}
             </tbody>
             <tfoot></tfoot>
           </table>
@@ -162,15 +212,56 @@ function ListarClientes() {
           >
             Anterior
           </button>
-          <span>Página {paginaAtual + 1} de {totalPaginas}</span>
+          <span>Página {paginaAtual + 1} de {totalPaginasCalculadas}</span>
           <button
             className="btn btn-outline-secondary ms-2"
             onClick={proximaPagina}
-            disabled={paginaAtual === totalPaginas - 1}
+            disabled={paginaAtual === totalPaginasCalculadas - 1}
           >
             Próximo
           </button>
         </div>
+
+        {/* Modal de Ver Mais */}
+        {modalVerMaisClienteVisivel && clienteParaVerMais && (
+          <div
+            className="modal fade show"
+            id="verMaisCliente"
+            tabIndex="-1"
+            aria-labelledby="verMaisClienteLabel"
+            aria-hidden="true"
+            style={{ display: 'block', backgroundColor: 'rgba(0,0,0,0.5)' }}
+          >
+            <div className="modal-dialog">
+              <div className="modal-content modal-cadastro bg-light text-dark">
+                <div className="modal-header">
+                  <h1 className="modal-title fs-5" id="verMaisClienteLabel">
+                    Produtos Comprados por {clienteParaVerMais.nome}
+                  </h1>
+                  <button
+                    type="button"
+                    className="btn-close btn-close-dark"
+                    onClick={() => setModalVerMaisClienteVisivel(false)}
+                    aria-label="Close"
+                  ></button>
+                </div>
+                <div className="modal-body modal-cadastro bg-lihght">
+                  {clienteParaVerMais.productsPurchased && clienteParaVerMais.productsPurchased.length > 0 ? (
+                    <ul className="list-group list-group-flush">
+                      {clienteParaVerMais.productsPurchased.map((produto, prodIndex) => (
+                        <li key={prodIndex} className="list-group-item bg-light text-dark border-secondary">
+                          <strong>{produto.name}</strong> - Data da Compra: {new Date(produto.purchaseDate).toLocaleDateString('pt-BR')}
+                        </li>
+                      ))}
+                    </ul>
+                  ) : (
+                    <p>Nenhum produto comprado por este cliente.</p>
+                  )}
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
 
         {/* Modal de Edição */}
         {modalEditarClienteVisivel && (
