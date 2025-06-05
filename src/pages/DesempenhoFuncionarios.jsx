@@ -16,13 +16,16 @@ function DesempenhoFuncionarios() {
    const [funcionarioSelecionado, setFuncionarioSelecionado] = useState(null)
    const [alerta, setAlerta] = useState(null)
 
-   const funcionarios = [
+   const [todosFuncionarios] = useState([
       { nome: 'Ana Souza', departamento: 'RH', nota: 4.7, ultima: '2025-05-10', observacao: 'Excelente liderança e comunicação.' },
       { nome: 'Carlos Lima', departamento: 'TI', nota: 2.3, ultima: '2025-05-08', observacao: 'Bom desempenho em projetos técnicos.' },
       { nome: 'Maria Silva', departamento: 'Marketing', nota: 1.8, ultima: '2025-05-02', observacao: 'Precisa melhorar a entrega de prazos.' },
       { nome: 'Pedro Santos', departamento: 'Financeiro', nota: 2.8, ultima: '2025-04-29', observacao: 'Desempenho abaixo do esperado.' },
       { nome: 'Pedro Santos', departamento: 'Financeiro', nota: 8.10, ultima: '2025-04-29', observacao: 'Desempenho abaixo do esperado.' },
-   ]
+    ])
+    
+    const [funcionarios, setFuncionarios] = useState(todosFuncionarios)
+    
 
    useEffect(() => {
       const totalAlertas = funcionarios.filter(f => f.nota < 3).length
@@ -110,6 +113,8 @@ function DesempenhoFuncionarios() {
                </div>
             </div>
 
+
+
             {/* Gráfico */}
             <div className="card mb-5 shadow">
                <div className="card-body">
@@ -117,6 +122,28 @@ function DesempenhoFuncionarios() {
                   <Bar data={dadosGrafico} options={opcoesGrafico} />
                </div>
             </div>
+
+            <div className="card mb-4 shadow container p-2">
+               <input
+                  type="text"
+                  className="form-control"
+                  placeholder="Pesquisar Funcionário"
+                  onChange={(e) => {
+                     const valor = e.target.value
+                     if (valor.trim() === '') {
+                       setFuncionarios(todosFuncionarios) // 🔁 restaura tudo
+                     } else {
+                       const filtrados = todosFuncionarios.filter(f =>
+                         f.nome.toLowerCase().includes(valor.toLowerCase())
+                       )
+                       setFuncionarios(filtrados)
+                     }
+                   }}
+                   
+               />
+            </div>
+
+
 
             {/* Cards dos Funcionários */}
             <div className="row">

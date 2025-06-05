@@ -24,13 +24,13 @@ function Login() {
   };
 
   return (
-    <div className=" d-flex flex-column justify-content-center align-items-center login-page">  
+    <div className=" d-flex flex-column justify-content-center align-items-center login-page">
       <div className="container-fluid d-flex justify-content-center align-items-center flex-column">
         <h1 className="text-center">FeedTrack - Software</h1>
         <div className="row w-100 justify-content-center">
           <div className="col-10 col-md-8 col-lg-6 d-flex">
             {/* Imagem centralizada verticalmente */}
-            <div className="d-flex align-items-center me-4">
+            <div className="d-none d-md-flex align-items-center me-4">
               <img
                 src="/img/login.jpg"
                 alt="Login"
@@ -39,6 +39,7 @@ function Login() {
                 className="img-fluid"
               />
             </div>
+
             {/* Formulário centralizado na tela */}
             <form
               className="d-flex flex-column justify-content-center flex-grow-1"

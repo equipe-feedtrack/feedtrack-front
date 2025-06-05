@@ -211,7 +211,8 @@ function NavBar() {
                 height={32}
                 className="rounded-circle me-2"
               />
-                            <strong className="text-white">Usuário</strong>     
+                            <strong className="text-white">Usuário</strong>
+                   
                    {" "}
             </a>
                        {" "}
