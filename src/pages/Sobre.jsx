@@ -37,6 +37,7 @@ function Sobre() {
           <li className="mb-2"><strong>Cleilson Alvino:</strong> Desenvolvedor Front-end</li>
           <li className="mb-2"><strong>Moisés Soares:</strong> Desenvolvedor Back-end</li>
           <li className="mb-2"><strong>Enzo Santiago:</strong> Analista de Sistemas</li>
+          <li className="mb-2"><strong>Alexsandro:</strong> Desenvolvedor Back-end</li>
         </ul>
         <p>
           Agradecemos seu interesse no FeedTrack e esperamos que nossa ferramenta seja um valioso aliado no crescimento do seu negócio!

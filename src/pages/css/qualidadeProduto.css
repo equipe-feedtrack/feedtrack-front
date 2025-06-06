@@ -1,0 +1,36 @@
+/* src/pages/css/qualidadeProduto.css */
+
+.qualidade-produto-page {
+    /* Estilos gerais da página, se necessário */
+    min-height: 100vh; /* Garante que a página tenha pelo menos 100% da altura da tela */
+    padding-bottom: 50px; /* Adiciona um padding extra na parte inferior para evitar que o select fique "colado" no rodapé */
+}
+
+.qualidade-produto-page .card {
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+/* Ajustes para o slider de nota */
+.form-range {
+    padding: 0 0.5rem;
+}
+
+/* --- NOVO: Garante que select e option tenham cor de texto preta --- */
+.qualidade-produto-page select.form-select,
+.qualidade-produto-page select.form-select option {
+    color: #000000; /* Cor preta para o texto */
+    /* Garante que o fundo não seja afetado por outras regras globais */
+    background-color: #ffffff; 
+}
+
+/* Opcional: Para focar no select, caso o navegador faça algum highlight estranho */
+.qualidade-produto-page select.form-select:focus {
+    color: #000000;
+    /* Adicione aqui qualquer estilo de foco que desejar, como um border-color do Bootstrap */
+    border-color: #86b7fe; /* Exemplo de border-color padrão do Bootstrap para inputs em foco */
+    box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+}
+
+/* FIM DAS NOVIDADES */

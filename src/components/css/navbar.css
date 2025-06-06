@@ -1,3 +1,20 @@
-a[href="#"]{
-    color: red;
-  }
+/* src/css/navbar.css */
+
+/* Sua regra original, talvez precisa ser mais específica */
+/* a[href="#"] {
+    color: rgb(194, 194, 194);
+} */
+
+/* Para links dentro do dropdown-menu que usam href="#" */
+.dropdown-menu .dropdown-item[href="#"] {
+    color: rgb(148, 48, 48); /* Aplica a cor cinza aos links de placeholder dentro dos dropdowns */
+}
+
+/* Certifique-se de que links normais dentro do dropdown-menu seguem o padrão Bootstrap */
+.dropdown-menu .dropdown-item {
+    color: #212529; /* Cor de texto padrão para dropdown items (preto, Bootstrap 5) */
+}
+
+/* Se você tem um estilo global para links, ele pode estar em outro lugar.
+   A classe 'textColorClass' no JavaScript já cuida da cor dos nav-links fora dos dropdowns.
+*/

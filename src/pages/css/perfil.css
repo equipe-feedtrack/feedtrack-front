@@ -1,0 +1,16 @@
+/* src/pages/css/perfil.css */
+
+.perfil-page {
+    /* Centraliza o conteúdo se a tela for grande */
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.perfil-page .card {
+    padding: 2rem;
+}
+
+.perfil-page .img-thumbnail {
+    border: 3px solid #0d6efd; /* Adiciona uma borda na foto de perfil */
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}

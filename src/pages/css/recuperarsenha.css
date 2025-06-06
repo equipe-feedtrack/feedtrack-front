@@ -1,0 +1,13 @@
+/* src/pages/css/recuperarSenha.css */
+
+.recuperar-senha-page {
+    min-height: 100vh; /* Ocupa a altura total da viewport */
+    background-color: #f8f9fa; /* Cor de fundo suave */
+    padding: 20px 0; /* Espaçamento superior e inferior */
+}
+
+/* Centraliza o formulário e adiciona um visual de card */
+.recuperar-senha-page .card {
+    max-width: 500px; /* Largura máxima para o formulário */
+    width: 100%;
+}

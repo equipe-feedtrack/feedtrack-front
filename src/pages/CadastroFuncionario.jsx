@@ -143,7 +143,7 @@ function CadastroFuncionario() {
         </div>
 
         <div className="table-responsive mt-4 text-center">
-          <table className="table table-dark table-striped">
+          <table className="table table-striped">
             <thead>
               <tr>
                 <th>Imagem</th>
