@@ -214,7 +214,7 @@ function ListaProdutos() {
               <tr>
                 <th>Código</th>
                 <th>Nome</th>
-                <th>Setor</th>
+                <th>Categoria</th>
                 <th>Data Entrada</th>
                 <th>Ações</th>
               </tr>
