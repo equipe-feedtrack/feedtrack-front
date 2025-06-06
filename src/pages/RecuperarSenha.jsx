@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import './css/recuperarSenha.css';
+import './css/recuperarsenha.css';
 
 function RecuperarSenha() {
   const [step, setStep] = useState(1); // 1: Solicitar código, 2: Redefinir senha
