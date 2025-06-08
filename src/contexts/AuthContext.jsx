@@ -31,7 +31,13 @@ export const AuthProvider = ({ children }) => {
       setUser(employeeUser);
       localStorage.setItem('currentUser', JSON.stringify(employeeUser));
       return true;
+    } else if (username === 'master' && password === 'master123') {
+      const masterUser = { username: 'master', role: 'master', name: 'Master' };
+      setUser(masterUser);
+      localStorage.setItem('currentUser', JSON.stringify(masterUser));
+      return true;
     }
+
     return false;
   };
 
@@ -47,6 +53,7 @@ export const AuthProvider = ({ children }) => {
     isAuthenticated: !!user, // Booleano: true se houver um usuário, false caso contrário
     isAdmin: user && user.role === 'admin',
     isEmployee: user && user.role === 'funcionario',
+    isMaster: user && user.role === 'master',
     login,
     logout,
   };
