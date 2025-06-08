@@ -8,7 +8,7 @@ function Login() {
   const [password, setPassword] = useState("");
   const [alerta, setAlerta] = useState(null); // { tipo: 'success'/'danger', mensagem: '...' }
 
-  const { login, isAuthenticated, isAdmin, isEmployee } = useAuth(); // Consumindo o contexto de autenticação
+  const { login, isAuthenticated, isAdmin, isEmployee, isMaster } = useAuth(); // Consumindo o contexto de autenticação
   const navigate = useNavigate(); // Hook para navegação programática
 
   // Efeito para redirecionar se o usuário já estiver autenticado
@@ -18,9 +18,11 @@ function Login() {
         navigate("/admin/dashboard", { replace: true });
       } else if (isEmployee) {
         navigate("/admin/dashboard", { replace: true }); // Ou '/funcionario/dashboard' se tiver um dashboard específico
+      } else if (isMaster) {
+        navigate("/master", { replace: true });
       }
     }
-  }, [isAuthenticated, isAdmin, isEmployee, navigate]); // Dependências do useEffect
+  }, [isAuthenticated, isAdmin, isEmployee, isMaster, navigate]); // Dependências do useEffect
 
   const handleSubmit = async (event) => { // Tornar a função assíncrona se o 'login' for assíncrono (chamada de API)
     event.preventDefault();
